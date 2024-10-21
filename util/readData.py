@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 from datetime import datetime
+from pathlib import Path
 
 class ReadData:
     def __init__(self):
@@ -11,8 +12,10 @@ class ReadData:
             'message':[]
         })
 
+        self.dataDir = Path ('data/whatsapp-conversations-export.txt')
+
     def readData(self):
-        with open("Conversa do WhatsApp com Cineminha.txt", "r", encoding="utf-8") as file:
+        with open(self.dataDir, "r", encoding="utf-8") as file:
             txt = file.read()
 
             informations = re.findall (r"(\d{2}/\d{2}/\d{4}) (\d{2}:\d{2}) - ([^:]+): (.+)", txt)
