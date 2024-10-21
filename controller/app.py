@@ -59,7 +59,7 @@ class App:
 
         for sender in self.senders:
 
-            plt.plot(pivot.index, pivot[sender], label=sender, colors=plt.cm.Paired.colors)
+            plt.plot(pivot.index, pivot[sender], label=sender)
 
             plt.title('Quantidade de conversas ao longo do tempo (data) por remetente')
 
