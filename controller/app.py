@@ -1,12 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from util.readData import ReadData
+from util.readData import readData
 
 class App:
     def __init__(self):
-        readData = ReadData()
-
-        self.conversationsDf = readData.readData()
+        self.conversationsDf = readData()
 
         self.senders = self.conversationsDf['sender'].unique().tolist()
         self.conversationsBySender = self.conversationsDf.groupby(["sender"]).size().reset_index(name="qtty")
@@ -30,18 +28,25 @@ class App:
         print(self.conversationsDf.loc[self.conversationsDf['sender'] == sender].reset_index())
 
     def sendersHistograms (self):
+        plt.figure(figsize=(10, 6))
+
         for sender in self.senders:
             conversationsByDateBySender = self.conversationsByDate[self.conversationsByDate['sender'] == sender]
 
-            plt.figure(figsize=(10, 6))
 
             plt.hist(conversationsByDateBySender['date'], label=sender)
 
-            plt.title(f'Histograma da qntd. de conversas de {sender}')
-            plt.xlabel('Datas')
-            plt.ylabel('Quantidade de conversas')
-            
-            plt.show()
+        plt.title(f'Histograma da qntd. de conversas de {sender}')
+        
+        plt.xlabel('Datas')
+        plt.ylabel('Quantidade de conversas')
+        
+        plt.xticks(rotation=45)
+
+        plt.legend(title="Remetente")
+
+        plt.tight_layout()
+        plt.show()
     
     def sendersPieGraph (self):
         plt.figure(figsize=(7, 9))
@@ -63,9 +68,12 @@ class App:
 
             plt.title('Quantidade de conversas ao longo do tempo (data) por remetente')
 
-            plt.xlabel('Datas')
-            plt.ylabel('Quantidade de conversas')
+        plt.xlabel('Datas')
+        plt.ylabel('Quantidade de conversas')
+        
+        plt.xticks(rotation=45)
 
-            plt.legend(title="Remetente")
+        plt.legend(title="Remetente")
 
+        plt.tight_layout()
         plt.show()
