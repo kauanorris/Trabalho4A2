@@ -1,8 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from util.readData import readData
+from util.exportCsv import exportCsv
 
-class App:
+class Controller:
     def __init__(self):
         self.conversationsDf = readData()
 
@@ -77,3 +78,6 @@ class App:
 
         plt.tight_layout()
         plt.show()
+
+    def exportCsv (self):
+        exportCsv(self.conversationsDf)

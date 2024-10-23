@@ -1,108 +1,120 @@
 import os
 import time
-from controller.app import App
-from util.inputs import Inputs
+from controller.controller import Controller
+from util.inputPlus import inputPlus
 
 class Menu:
     def __init__(self):
-        self.app = App()
-        self.inpt = Inputs()
+        self.controller = Controller()
 
     def exibirMenu(self):
         op = -1
 
-        while op != 0:
+        while op:
             os.system('cls')
 
             print("===== MENU PRINCIPAL =====")
             print("Escolha uma opção: ")
-            print("1. Resumo das conversas")
-            print("2. Histórico de um remetente")
-            print("3. Gráfico de histórico dos remetentes")
-            print("4. Gráfico de pizza")
-            print("5. Gráfico de linhas")
+            print("1. Exibir Resumo das conversas")
+            print("2. Exibir Histórico de um remetente")
+            print("3. Exibir Gráfico de histórico dos remetentes")
+            print("4. Exibir Gráfico de pizza")
+            print("5. Exibir Gráfico de linhas")
+            print("6. Exibir Exportar conversas para CSV")
             print("0. Sair")
             
-            op = self.inpt.input("Digite: ", 0, 5)
+            op = inputPlus("Digite: ", 0, 6)
 
             os.system('cls')
 
             if op == 1:
-                while op == 1:
+                while op:
                     print("===== RESUMO DAS CONVERSAS =====")
 
-                    self.app.conversationsSummary()
+                    self.controller.conversationsSummary()
 
                     print("Deseja voltar ao menu principal: ")
+                    print("0. Sim")
                     print("1. Não")
-                    print("2. Sim")
 
-                    op = self.inpt.input("Digite: ", 1, 2)
+                    op = inputPlus("Digite: ", 0, 1)
 
                     os.system('cls')
+
+                print("Voltando ao menu principal...")
+
+                op = 1
                 
             elif op == 2:
-                while op == 2:
+                while op:
                     print("===== HISTÓRICO DE UM REMETENTE =====")
 
                     print("Deseja ver a lista de remetentes antes?")
-                    print("1. Sim")
-                    print("2. Não")
+                    print("0. Sim")
+                    print("1. Não")
                     
-                    op = self.inpt.input("Digite: ", 1, 2)
+                    op = inputPlus("Digite: ", 0, 1)
 
                     os.system('cls')
 
                     if op == 1:
                         print("===== LISTA DE REMETENTES =====")
 
-                        self.app.printSendersList()
+                        self.controller.printSendersList()
 
                     sender = input("Digite o nome do remetente que deseja buscar o histórico: ")
 
-                    if self.app.searchSender(sender):
+                    if self.controller.searchSender(sender):
                         os.system('cls')
 
                         print(f"===== HISTÓRICO DE {sender} =====")
 
-                        self.app.sendersHistory(sender)
+                        self.controller.sendersHistory(sender)
 
                         print("Deseja voltar ao menu principal: ")
-                        print("1. Sim")
-                        print("2. Não")
+                        print("0. Sim")
+                        print("1. Não")
 
-                        op = self.inpt.input("Digite: ", 1, 2)
+                        op = inputPlus("Digite: ", 0, 1)
 
                         os.system('cls')
                     else:
                         print ("ERRO: Nome inválido!")
+
+                print("Voltando ao menu principal...")
+
+                op = 2
                     
             elif op == 3:
                 print("===== GRÁFICO DE HISTÓRICO DOS REMETENTES =====")
 
                 print("Mostrando gráfico...")
 
-                self.app.sendersHistograms()
+                self.controller.sendersHistograms()
                 
             elif op == 4:
                 print("===== GRÁFICO DE PIZZA =====")
 
                 print("Mostrando gráfico...")
 
-                self.app.sendersPieGraph()
+                self.controller.sendersPieGraph()
                 
             elif op == 5:
                 print("===== GRÁFICO DE LINHAS =====")
 
                 print("Mostrando gráfico...")
 
-                self.app.sendersLineGraph()
+                self.controller.sendersLineGraph()
+
+            elif op == 6:
+                print("===== EXPORTAR CONVERSAS PARA CSV =====")
+
+                print("Exportando dados para CSV...")
+
+                self.controller.exportCsv()
                 
-            elif op == 0:
+            else:
                 print("Saindo do programa...")        
                 break
-
-            else:
-                print("ERRO: Valor inválido!!!")
 
             time.sleep(2)
